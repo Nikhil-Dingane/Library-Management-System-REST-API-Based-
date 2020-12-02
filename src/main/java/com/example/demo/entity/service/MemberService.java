@@ -21,26 +21,37 @@ public class MemberService {
 	}
 	
 	public Member getMember(String id) {
-		return members.stream().filter(t -> t.getMemberId().contentEquals(id)).findFirst().get();
+		for(int i=0; i<members.size();i++) {
+			Member m = members.get(i);
+			if(m.getMemberId().equals(id)) {
+				return m;
+			}
+		}
+		return null;
 	}
 	
 	public void addMember(Member member) {
 		members.add(member);
 	}
 	
-	public void updateMember(String id, Member member) {
+	public Member updateMember(String id, Member member) {
 		for(int i=0; i<members.size();i++) {
 			Member m = members.get(i);
 			if(m.getMemberId().equals(id)) {
 				members.set(i, member);
-				return;
+				return member;
 			}
 		}
-		
+		return null;
 	}
 
-	public void deleteMember(String id) {
-		members.removeIf(t->t.getMemberId().equals(id));
+	public Member deleteMember(String Id) {
+		for(int i = 0; i < members.size(); i++) {
+			if(members.get(i).getMemberId().contentEquals(Id)) {
+				return members.remove(i);
+			}
+		}
+		return null;
 	}	
 }
 
