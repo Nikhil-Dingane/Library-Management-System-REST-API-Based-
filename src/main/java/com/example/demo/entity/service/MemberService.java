@@ -3,55 +3,41 @@ package com.example.demo.entity.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Member;
+import com.example.demo.entity.repository.MemberRepository;
 
 @Service
 public class MemberService {
 	
-	private List<Member> members = new ArrayList<>(Arrays.asList(
-			new Member("1","Kaustubh Wadagavi","9689798879","Kadegaon"),	
-			new Member("2","Nikhil Dingane","9370481188","Kadegaon")
-		));
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	public List<Member> getAllMembers() {
+		List<Member> members = new ArrayList<>();
+		memberRepository.findAll()
+		.forEach(members::add);
 		return members;
 	}
 	
-	public Member getMember(String id) {
-		for(int i=0; i<members.size();i++) {
-			Member m = members.get(i);
-			if(m.getMemberId().equals(id)) {
-				return m;
-			}
-		}
-		return null;
+	public Optional<Member> getMember(String id) {
+		return memberRepository.findById(id);
 	}
 	
 	public void addMember(Member member) {
-		members.add(member);
+		memberRepository.save(member);
 	}
 	
 	public Member updateMember(String id, Member member) {
-		for(int i=0; i<members.size();i++) {
-			Member m = members.get(i);
-			if(m.getMemberId().equals(id)) {
-				members.set(i, member);
-				return member;
-			}
-		}
-		return null;
+		return memberRepository.save(member);
 	}
 
-	public Member deleteMember(String Id) {
-		for(int i = 0; i < members.size(); i++) {
-			if(members.get(i).getMemberId().contentEquals(Id)) {
-				return members.remove(i);
-			}
-		}
-		return null;
+	public void deleteMember(String Id) {
+		memberRepository.deleteById(Id);
 	}	
 }
 

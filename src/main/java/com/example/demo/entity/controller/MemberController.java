@@ -1,6 +1,7 @@
 package com.example.demo.entity.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,24 +25,24 @@ public class MemberController {
 	}	
 	
 	@RequestMapping("/members/{id}")
-	public Member getMember(@PathVariable String id) {
+	public Optional<Member> getMember(@PathVariable String id) {
 		return memberService.getMember(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/members")
-	public Member addTopic(@RequestBody Member member) {
+	public Member addMember(@RequestBody Member member) {
 		memberService.addMember(member);
 		return member;
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/members/{id}")
-	public Member updateTopic(@RequestBody Member member, @PathVariable String id) {
+	public Member updateMember(@RequestBody Member member, @PathVariable String id) {
 		memberService.updateMember(id,member);
 		return member;
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/members/{id}")
-	public void deleteTopic(@PathVariable String id) {
+	public void deleteMember(@PathVariable String id) {
 		memberService.deleteMember(id);
 	}
 }
