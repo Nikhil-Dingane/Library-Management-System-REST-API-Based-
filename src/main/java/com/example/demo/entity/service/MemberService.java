@@ -1,7 +1,6 @@
 package com.example.demo.entity.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,25 +18,27 @@ public class MemberService {
 	
 	public List<Member> getAllMembers() {
 		List<Member> members = new ArrayList<>();
-		memberRepository.findAll()
-		.forEach(members::add);
+		memberRepository.findAll().forEach(members::add);
 		return members;
 	}
 	
-	public Optional<Member> getMember(String id) {
+	public Optional<Member> getMember(Long id) {
 		return memberRepository.findById(id);
 	}
 	
-	public void addMember(Member member) {
-		memberRepository.save(member);
+	public Member addMember(Member member) {
+		member.setId(null);
+		return memberRepository.save(member);
 	}
 	
-	public Member updateMember(String id, Member member) {
+	public Member updateMember(Member member) {
 		return memberRepository.save(member);
 	}
 
-	public void deleteMember(String Id) {
+	public Optional<Member> deleteMemberById(Long Id) {
+		Optional<Member> member = memberRepository.findById(Id);
 		memberRepository.deleteById(Id);
+		return member;
 	}	
 }
 

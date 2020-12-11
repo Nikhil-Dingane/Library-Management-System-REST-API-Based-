@@ -19,30 +19,29 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@RequestMapping("/members")
+	@RequestMapping(method=RequestMethod.GET,value="/members")
 	public List<Member> getAllMembers() {
 		return memberService.getAllMembers();
 	}	
 	
-	@RequestMapping("/members/{id}")
-	public Optional<Member> getMember(@PathVariable String id) {
+	@RequestMapping(method=RequestMethod.GET,value="/members/{id}")
+	public Optional<Member> getMember(@PathVariable long id) {
 		return memberService.getMember(id);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/members")
 	public Member addMember(@RequestBody Member member) {
-		memberService.addMember(member);
-		return member;
+		return memberService.addMember(member);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT,value="/members/{id}")
-	public Member updateMember(@RequestBody Member member, @PathVariable String id) {
-		memberService.updateMember(id,member);
-		return member;
+	public Member updateMember(@RequestBody Member member, @PathVariable long id) {
+		member.setId(id);
+		return memberService.updateMember(member);
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE,value="/members/{id}")
-	public void deleteMember(@PathVariable String id) {
-		memberService.deleteMember(id);
+	public Optional<Member> deleteMember(@PathVariable long id) {
+		return memberService.deleteMemberById(id);
 	}
 }

@@ -1,14 +1,20 @@
 package com.example.demo.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Member {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String memberId;
-	private String memberName;
+	private String memberFirstName;
+	private String memberMiddleName;
+	private String memberLastName;
 	private String phoneNumber;
 	private String memberAddress;
 	
@@ -16,12 +22,24 @@ public class Member {
 		
 	}
 
-	public Member(String memberId, String memberName, String phoneNumber, String address) {
+	public Member(long id, String memberId, String memberFirstName, String memberMiddleName, String memberLastName,
+			String phoneNumber, String memberAddress) {
 		super();
+		this.id = id;
 		this.memberId = memberId;
-		this.memberName = memberName;
+		this.memberFirstName = memberFirstName;
+		this.memberMiddleName = memberMiddleName;
+		this.memberLastName = memberLastName;
 		this.phoneNumber = phoneNumber;
-		this.memberAddress = address;
+		this.memberAddress = memberAddress;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getMemberId() {
@@ -32,12 +50,28 @@ public class Member {
 		this.memberId = memberId;
 	}
 
-	public String getMemberName() {
-		return memberName;
+	public String getMemberFirstName() {
+		return memberFirstName;
 	}
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setMemberFirstName(String memberFirstName) {
+		this.memberFirstName = memberFirstName;
+	}
+
+	public String getMemberMiddleName() {
+		return memberMiddleName;
+	}
+
+	public void setMemberMiddleName(String memberMiddleName) {
+		this.memberMiddleName = memberMiddleName;
+	}
+
+	public String getMemberLastName() {
+		return memberLastName;
+	}
+
+	public void setMemberLastName(String memberLastName) {
+		this.memberLastName = memberLastName;
 	}
 
 	public String getPhoneNumber() {
