@@ -16,14 +16,18 @@ public class Member {
 	private String memberMiddleName;
 	private String memberLastName;
 	private String phoneNumber;
+	private String birthDate;
+	private String emailAddress;
 	private String memberAddress;
+	private String activityStatus;
+	
 	
 	public Member() {
 		
 	}
 
-	public Member(long id, String memberId, String memberFirstName, String memberMiddleName, String memberLastName,
-			String phoneNumber, String memberAddress) {
+	public Member(Long id, String memberId, String memberFirstName, String memberMiddleName, String memberLastName,
+			String phoneNumber, String birthDate, String emailAddress, String memberAddress, String activityStatus) {
 		super();
 		this.id = id;
 		this.memberId = memberId;
@@ -31,7 +35,10 @@ public class Member {
 		this.memberMiddleName = memberMiddleName;
 		this.memberLastName = memberLastName;
 		this.phoneNumber = phoneNumber;
+		this.birthDate = birthDate;
+		this.emailAddress = emailAddress;
 		this.memberAddress = memberAddress;
+		this.activityStatus = activityStatus;
 	}
 
 	public Long getId() {
@@ -88,6 +95,30 @@ public class Member {
 
 	public void setMemberAddress(String memberAddress) {
 		this.memberAddress = memberAddress;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getActivityStatus() {
+		return activityStatus;
+	}
+
+	public void setActivityStatus(String activityStatus) {
+		this.activityStatus = activityStatus;
 	}
 	
 }
