@@ -1,5 +1,7 @@
 package com.example.demo.entity.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +16,14 @@ import java.util.Optional;
 
 @RestController
 public class BookController {
+	private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
 	@Autowired
 	private BookService bookService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/books")
 	public List<Book> getAllBooks() {
+		log.info("Retrieving all books.");
 		return bookService.getAllBooks();
 	}
 	
@@ -29,6 +34,7 @@ public class BookController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/books")
 	public Book addBook(@RequestBody Book book) {
+		log.info("Adding a book.");
 		return bookService.addBook(book);
 	}
 	
