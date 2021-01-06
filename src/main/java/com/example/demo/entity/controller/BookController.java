@@ -14,37 +14,39 @@ import com.example.demo.entity.service.BookService;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
+@RequestMapping("books")
 public class BookController {
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
 	@Autowired
 	private BookService bookService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/books")
+	@RequestMapping(method = RequestMethod.GET)
 	public List<Book> getAllBooks() {
 		log.info("Retrieving all books.");
 		return bookService.getAllBooks();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/books/{bookId}")
+	@RequestMapping(method = RequestMethod.GET, value = "{bookId}")
 	public Optional<Book> getBook(@PathVariable long bookId){
 		return bookService.getBook(bookId);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/books")
+	@RequestMapping(method = RequestMethod.POST)
 	public Book addBook(@RequestBody Book book) {
 		log.info("Adding a book.");
 		return bookService.addBook(book);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/books/{bookId}")
+	@RequestMapping(method = RequestMethod.PUT, value = "{bookId}")
 	public Book updateBook(@PathVariable long bookId,@RequestBody Book book){
 		book.setId(bookId);
 		return bookService.updateBook(book);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, value = "/books/{bookId}")
+	@RequestMapping(method = RequestMethod.DELETE, value = "{bookId}")
 	public Optional<Book> deleteBook(@PathVariable long bookId){
 		return bookService.removeBookById(bookId);
 	}
