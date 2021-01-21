@@ -15,8 +15,10 @@ public class IssueBookLoan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Long bookId;
-	private Long memberId;
+	@OneToOne
+	private Book book;
+	@OneToOne
+	private Member member;
 	private Date issuedDate;
 	private Date dueDate;
 	private Date returnedDate;
@@ -28,11 +30,11 @@ public class IssueBookLoan {
 		super();
 	}
 
-	public IssueBookLoan(Long id, Long bookId, Long memberId, Date issuedDate, Date dueDate, Date returnedDate,
+	public IssueBookLoan(Long id, Book book, Member member, Date issuedDate, Date dueDate, Date returnedDate,
 			String activityStatus) {
 		this.id = id;
-		this.bookId = bookId;
-		this.memberId = memberId;
+		this.book = book;
+		this.member = member;
 		this.issuedDate = issuedDate;
 		this.dueDate = dueDate;
 		this.returnedDate = returnedDate;
@@ -47,20 +49,20 @@ public class IssueBookLoan {
 		this.id = id;
 	}
 
-	public Long getBookId() {
-		return bookId;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBookId(Long bookId) {
-		this.bookId = bookId;
+	public void setBookId(Book book) {
+		this.book = book;
 	}
 
-	public Long getMemberId() {
-		return memberId;
+	public Member getMember() {
+		return member;
 	}
 
-	public void setMemberId(Long memberId) {
-		this.memberId = memberId;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 	public Date getIssuedDate() {

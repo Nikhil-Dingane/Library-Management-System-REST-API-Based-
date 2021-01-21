@@ -18,7 +18,6 @@ public class BookService {
 	private BookRepository bookRepository;
 	
 	public List<Book> getAllBooks(){
-		//return this.books;
 		List<Book> books = new ArrayList<Book>();
 		bookRepository.findAll().forEach(books::add);
 		return books;

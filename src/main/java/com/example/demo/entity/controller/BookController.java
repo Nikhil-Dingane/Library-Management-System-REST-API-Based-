@@ -26,6 +26,7 @@ public class BookController {
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Book> getAllBooks() {
 		log.info("Retrieving all books.");
+		log.info("d");
 		return bookService.getAllBooks();
 	}
 	
