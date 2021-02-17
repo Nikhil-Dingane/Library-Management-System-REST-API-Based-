@@ -5,8 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table( uniqueConstraints={ @UniqueConstraint(name="book_id_uni_const", columnNames={"book_id"})})
 public class BookStock {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +27,11 @@ public class BookStock {
 		this.book = book;
 		this.quantity = quantity;
 	}
-
+	
+	public BookStock(Book book,int quantity) {
+		this.book = book;
+		this.quantity = quantity;
+	}
 	public Long getId() {
 		return id;
 	}

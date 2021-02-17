@@ -24,6 +24,10 @@ public class IssueBookLoan {
 	private Date returnedDate;
 	private String activityStatus;
 	
+	static enum status{
+		ISSUED,RETURNED
+	}
+	
 	
 	
 	public IssueBookLoan() {

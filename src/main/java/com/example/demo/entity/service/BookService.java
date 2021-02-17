@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Arrays;
 
 import com.example.demo.entity.Book;
+import com.example.demo.entity.BookStock;
 import com.example.demo.entity.repository.BookRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class BookService {
 	
 	@Autowired
 	private BookRepository bookRepository;
+	@Autowired
+	private BookStockService bookStockService;
 	
 	public List<Book> getAllBooks(){
 		List<Book> books = new ArrayList<Book>();
@@ -29,7 +32,11 @@ public class BookService {
 	
 	public Book addBook(Book book) {
 		book.setId(null);
-		return bookRepository.save(book);
+		book = bookRepository.save(book);
+		if(book != null) {
+			bookStockService.addBookQuantity(new BookStock(book,1));
+		}
+		return book;
 	}
 	
 	public Book updateBook(Book book) {
@@ -39,6 +46,7 @@ public class BookService {
 	public Optional<Book> removeBookById(long bookId) {
 		Optional<Book> book = bookRepository.findById(bookId);
 		bookRepository.deleteById(bookId);
+		bookStockService.deleteBookStockByBookId(bookId);
 		return book;
 	}
 }

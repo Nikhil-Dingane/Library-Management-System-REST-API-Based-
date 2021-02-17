@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.entity.Book;
 import com.example.demo.entity.BookStock;
-import com.example.demo.entity.repository.BookRepository;
 import com.example.demo.entity.repository.BookStockRepository;
 
 @Service
@@ -25,13 +22,41 @@ public class BookStockService {
 		return bookStockRepository.findByBookId(bookId);
 	}
 	
-	public BookStock addBookQuantity(Long bookId, int quantity) {
-		BookStock bookStock = new BookStock();
-		Book book = new Book();
-		book.setId(bookId);
-		bookStock.setBook(book);
-		bookStock.setquantity(quantity);
+	public BookStock updateBookQuantity(BookStock bookStock) {
 		
 		return bookStockRepository.save(bookStock);
+	}
+	
+	public BookStock addBookQuantity(BookStock bookStock) {
+		BookStock bookStock2 = getBookQuantity(bookStock.getBook().getId());
+		
+		if(bookStock2 != null) {
+			bookStock2.setquantity(bookStock2.getquantity() + bookStock.getquantity());
+			bookStock2 = bookStockRepository.save(bookStock2);
+		}
+		
+		return bookStock2;
+	}
+	
+	public BookStock decreaseBookQuanity(BookStock bookStock) {
+		BookStock bookStock2 = getBookQuantity(bookStock.getBook().getId());
+		
+		if(bookStock2 != null) {
+			if(bookStock2.getquantity() > 0)
+			{
+				bookStock2.setquantity(bookStock2.getquantity() - bookStock.getquantity());
+				bookStock2 = bookStockRepository.save(bookStock2);
+			} else {
+				bookStock2 = null;
+			}
+		}
+		
+		return bookStock2;
+	}
+	
+	public BookStock deleteBookStockByBookId(Long bookId) {
+		BookStock bookStock = getBookQuantity(bookId);
+		bookStockRepository.deleteById(bookStock.getId());
+		return bookStock;
 	}
 }

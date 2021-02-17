@@ -1,5 +1,7 @@
 package com.example.demo.entity.service;
 
+import com.example.demo.entity.Book;
+import com.example.demo.entity.BookStock;
 import com.example.demo.entity.IssueBookLoan;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,8 @@ import com.example.demo.entity.repository.IssueBookLoanRepository;
 public class IssueBookLoanService {
 	@Autowired
 	IssueBookLoanRepository issueBookLoanRepository;
-
+	@Autowired
+	BookStockService bookStockService;
 	public List<IssueBookLoan> getAllIssuedBookLoans() {
 		List<IssueBookLoan> issuedBookLoans = new ArrayList<IssueBookLoan>();
 		issueBookLoanRepository.findAll().forEach(issuedBookLoans::add);
@@ -24,7 +27,13 @@ public class IssueBookLoanService {
 
 	public IssueBookLoan issueBookLoan(IssueBookLoan issueBookLoan) {
 		issueBookLoan.setId(null);
-		return issueBookLoanRepository.save(issueBookLoan);
+		BookStock bookStock = bookStockService.getBookQuantity(issueBookLoan.getBook().getId());
+		
+		if(bookStock.getquantity() > 0) {
+			return issueBookLoanRepository.save(issueBookLoan);
+		} else {
+			return null;
+		}
 	}
 
 	public IssueBookLoan updateIssuedBookLoan(IssueBookLoan issueBookLoan) {
@@ -36,6 +45,9 @@ public class IssueBookLoanService {
 
 		if (issuedBook != null) {
 			issueBookLoanRepository.deleteById(id);
+			Book book = new Book();
+			book.setId(id);
+			bookStockService.addBookQuantity(new BookStock(book,1));
 		}
 
 		return issuedBook;
