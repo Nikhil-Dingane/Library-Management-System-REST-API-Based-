@@ -44,9 +44,9 @@ public class BookService {
 	}
 	
 	public Optional<Book> removeBookById(long bookId) {
+		bookStockService.deleteBookStockByBookId(bookId);
 		Optional<Book> book = bookRepository.findById(bookId);
 		bookRepository.deleteById(bookId);
-		bookStockService.deleteBookStockByBookId(bookId);
 		return book;
 	}
 }

@@ -22,12 +22,12 @@ public class BookStockService {
 		return bookStockRepository.findByBookId(bookId);
 	}
 	
-	public BookStock updateBookQuantity(BookStock bookStock) {
+	public BookStock addBookQuantity(BookStock bookStock) {
 		
 		return bookStockRepository.save(bookStock);
 	}
 	
-	public BookStock addBookQuantity(BookStock bookStock) {
+	public BookStock updateBookQuantity(BookStock bookStock) {
 		BookStock bookStock2 = getBookQuantity(bookStock.getBook().getId());
 		
 		if(bookStock2 != null) {

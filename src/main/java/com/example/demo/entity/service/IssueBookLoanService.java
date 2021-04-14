@@ -30,6 +30,8 @@ public class IssueBookLoanService {
 		BookStock bookStock = bookStockService.getBookQuantity(issueBookLoan.getBook().getId());
 		
 		if(bookStock.getquantity() > 0) {
+			bookStock.setquantity(bookStock.getquantity() - 1);
+			bookStockService.updateBookQuantity(bookStock);
 			return issueBookLoanRepository.save(issueBookLoan);
 		} else {
 			return null;
